@@ -4,4 +4,11 @@
   <artifactId>service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>webservice</name>
+  <dependencies>
+  <dependency>
+  		<groupId>com.lnu.tickets</groupId>
+  		<artifactId>core</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
