@@ -1,12 +1,14 @@
 package com.felix.tickets.db.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import com.felix.tickets.db.util.HibernateUtil;
 import com.felix.tickets.model.Event;
+import com.felix.tickets.model.User;
 
 public class EventDao extends GenericDaoJpa<Event, Integer> {
 
@@ -38,5 +40,22 @@ public class EventDao extends GenericDaoJpa<Event, Integer> {
 			em.close();
 		}
 		return res;
+	}
+	
+	public List<Event> getNewEventsByUserId(int userId){
+		User user = UserDao.instance().read(userId,true);
+		List<Event> allEvents = readAll();
+		final HashSet<Integer> userEventId = new HashSet<Integer>();
+		user.getEvents().forEach(e->userEventId.add(e.getEvent().getId()));
+		
+		List<Event> result = new ArrayList<Event>();
+		for(Event e : allEvents)
+		{
+			if(userEventId.contains(user.getId()) == false){
+				result.add(e);
+			}
+		}
+		
+		return result;
 	}
 }
